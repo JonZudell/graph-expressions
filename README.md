@@ -1,2 +1,2 @@
 # graph-expressions
-a lexer for graphs
+a dsl for graph construction
