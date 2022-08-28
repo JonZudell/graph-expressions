@@ -24,18 +24,13 @@
 # Interpreter
 #   Non Deterministic Pushdown Automota
 #   Read Evaluate Print Loop
-# -----------------------------------------------------------------------------
-# Needs:
-# - io
-# - import
-
 import sys
 import re
 from signal import signal, SIGINT
-LAMBDA_SYMBOL='λ'
-CURRENT_SYMBOL="<ATOM>"
-TERMINAL_SYMBOLS = {}
+
+
 GRAMMAR = {}
+TERMINAL_REGEX = {}
 
 GRAMMAR["<ATOM>"] = ['graph-component', '<EXPRESSION>']
 GRAMMAR["<EXPRESSION>"] = ['(<ATOM>)', '<ABSTRACTION>','<APPLICATION>']
@@ -46,8 +41,11 @@ TERMINAL_REGEX["graph-component"] = r'^([a-z]*)(-[a-z]+) $'
 TERMINAL_REGEX["lambda"] = r'{lambda|λ}'
 TERMINAL_REGEX["dot"] = r'{dot|.}'
 
+LAMBDA_SYMBOL='λ'
+CURRENT_SYMBOL="<ATOM>"
+GRAPH = {}
+
 def handler(signal_received, frame):
-    # Handle any cleanup here
     print('SIGINT or CTRL-C detected. Exiting gracefully')
     exit(0)
 
@@ -72,15 +70,26 @@ def evaluate(expression):
         # pass update symbol and pop the 'Symbol off the stack;
         pass
     elif expression.starts_with('(')
+        # atom apply value to next
         pass
     elif expression.starts_with('l'):
+        # anonymous function declaration
         pass
     else:
+        # add new symbol to graph
         pass
 
+def read_evaluate(expression):
+    return evaluate(read(expression))
+
+def repl(io):
+    while True:
+        io = read_evaluate()
+        print(io)
+
 if __name__ == '__main__':
+    # package structure needed
+    io = sys.argv[1]
     print("---------- ge repl.py 0.0.0 ----------")
     signal(SIGINT, handler)
-    io = ''
-    while True:
-        print(evaluate(read(io)))
+    repl(io)
