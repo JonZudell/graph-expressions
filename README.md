@@ -32,10 +32,10 @@ Backus-Naur Form is an abstract grammar definition. Unpack Symbols until you hit
 ### graph-expression grammar-rules
 ```
 Grammar for the lambda-calculus
-  <ATOM>        ::= <EXPRESSION> | variable
-  <EXPRESSION>  ::= "("<ATOM>")" | <ABSTRACTION> | <APPLICATION>>
-  <ABSTRATION>  ::= lambda <ATOM> dot <ATOM>
-  <APPLICATION> ::= <ATOM> | <APPLICATION> (<ATOM>| <ABSTRACTION>)
+<expression> ::= <variable>                      ; lowercase identifiers
+               | <constant>                      ; predefined objects
+               | ( <expression> <expression> )   ; combinations
+               | ( λ <variable> . <expression> ) ; abstractions
 ```
 
 ## Encoding Data
