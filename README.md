@@ -1,17 +1,12 @@
 # graph-expressions
 A toy programming language with syntax inspired by the lambda calculus.
 
-With the goal of implementing a context-free, unambiguous, recursive grammar.
-
-As a no left recursion, left factored language. Read it like polish notation arithmatic.
-
-Everything is an identity or terminal symbol, a symbol never before encountered will be added to the graph and return itself.
+Everything is an identity or terminal symbol, a symbol never before encountered will be added to the graph.
 
 ## Abstract rewriting system
-> It's been theorized since 6 BCE by Sanskrit scholars that any language structure can be described by the continuous application of symbol substition rules.
-Language is a system for computation. Grammar defines the structure of language. 
-Using a grammar and symbolic representations of [Combinational Login](https://en.wikipedia.org/wiki/Combinational_logic) we can compute anything.
-Either by defering execution to the `REPL` or using pure logic operations on an input.
+[Formal Grammer](https://en.wikipedia.org/wiki/Formal_grammar)
+[Abstract Rewrite System](https://en.wikipedia.org/wiki/Abstract_rewriting_system)
+Grammars are used to describe the structure of a languae and the Abstract Rewriting System describes how to apply them. Like Algebra.
 
 ## Definiton of Grammar
 [CS-340](https://ycpcs.github.io/cs340-fall2016/labs/index.html)

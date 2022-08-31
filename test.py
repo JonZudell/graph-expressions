@@ -3,15 +3,27 @@ import repl
 
 class TestRepl(unittest.TestCase):
     def setUp(self):
-        repl.CURRENT_SYMBOL = "<EXPRESSION>"
         repl.GRAPH = {}
+
+    def test_read(self):
+        io = "identity"
+        self.assertEqual(repl.evaluate(repl.read(io)), io) 
 
     # https://opendsa-server.cs.vt.edu/OpenDSA/Books/PL/html/Semantics.html 
     # validate semantics
     def test_identity(self):
-        idx = 'identity'
-        self.assertEqual(repl.read(idx), idx) 
-        self.assertEqual(repl.evaluate(repl.read(idx)), idx) 
+        io = 'identity'
+        self.assertEqual(repl.evaluate(io), io) 
+        io = 'x'
+        self.assertEqual(repl.evaluate(io), io) 
+
+    def test_abstraction(self):
+        io = "λ x . x"
+        self.assertEqual(repl.evaluate(io), io) 
+        io = "λ y . y"
+        self.assertEqual(repl.evaluate(io), io) 
+        io = "λ x . y"
+        self.assertEqual(repl.evaluate(io), io) 
 
     def test_no_left_recursion_grammar(self):
         # Left recursion is a case when the left-most non-terminal in a production of a non-terminal is the non-terminal itself (direct left recursion) or through some other non-terminal definitions, rewrites to the non-terminal again (indirect left recursion).
@@ -31,10 +43,6 @@ class TestRepl(unittest.TestCase):
 
     # Test our ability to encode data
     def test_church_encoding(self):
-        pass
-
-    # Correctness of REPL
-    def test_all_syntax_resolves_to_series_of_terminal_symbols(self):
         pass
 
 if __name__ == '__main__':
