@@ -24,6 +24,8 @@ class TestRepl(unittest.TestCase):
         self.assertEqual(repl.evaluate(io), io) 
         io = "λ x . y"
         self.assertEqual(repl.evaluate(io), io) 
+        io = "λ x . λ y . y"
+        self.assertEqual(repl.evaluate(io), io) 
 
     def test_no_left_recursion_grammar(self):
         # Left recursion is a case when the left-most non-terminal in a production of a non-terminal is the non-terminal itself (direct left recursion) or through some other non-terminal definitions, rewrites to the non-terminal again (indirect left recursion).
@@ -34,8 +36,12 @@ class TestRepl(unittest.TestCase):
             self.assertFalse(key in symbols)
 
     def test_left_factored_grammar(self):
-        # Left factoring is removing the common left factor that appears in two productions of the same non-terminal. It is done to avoid back-tracing by the parser. Suppose the parser has a look-ahead, consider this example:
-        pass
+        # Left factoring is removing the common left factor that appears in two productions of the same non-terminal.
+        for key in repl.GRAMMAR.keys():
+            left_factors = []
+            for production in repl.GRAMMAR[key]:
+                left_factors.append(production.split(' ')[0])
+            self.assertFalse(key in left_factors)
 
     # Eliminate noise
     def test_format_expression(self):
