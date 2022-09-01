@@ -14,16 +14,31 @@ class TestRepl(unittest.TestCase):
     def test_identity(self):
         io = 'identity'
         self.assertEqual(repl.evaluate(io), io) 
+
         io = 'x'
         self.assertEqual(repl.evaluate(io), io) 
+
+    def test_application(self):
+        io = '(x y)'
+        is_match, ndx = repl.match_application(io)
+        self.assertTrue(is_match)
+        self.assertEqual(len(io) - 1, ndx)
+
+        io = '(λx.x y)'
+        is_match, ndx = repl.match_application(io)
+        self.assertTrue(is_match)
+        self.assertEqual(len(io) - 1, ndx)
 
     def test_abstraction(self):
         io = "λ x . x"
         self.assertEqual(repl.evaluate(io), io) 
+
         io = "λ y . y"
         self.assertEqual(repl.evaluate(io), io) 
+
         io = "λ x . y"
         self.assertEqual(repl.evaluate(io), io) 
+
         io = "λ x . λ y . y"
         self.assertEqual(repl.evaluate(io), io) 
 

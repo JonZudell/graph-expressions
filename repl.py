@@ -30,6 +30,20 @@ def handler(signal_received, frame):
     print('SIGINT or CTRL-C detected. Exiting gracefully')
     exit(0)
 
+def match_application(io):
+    parentheses_count = 0
+    for ndx, character in enumerate(io):
+        if character == '(':
+            parentheses_count = parentheses_count + 1
+        elif character == ')':
+            parentheses_count = parentheses_count - 1
+            if parentheses_count == 0:
+                return (True, ndx)
+            elif parenthese_count == -1:
+                raise Exception("Unmatched Parentheses encountered at ndx")
+    return (False, 0)
+        
+
 def evaluate(io):
     for key in TERMINAL_LEXEMES.keys():
         if TERMINAL_LEXEMES[key].match(io):
@@ -37,8 +51,8 @@ def evaluate(io):
                 return io
     for key in NON_TERMINAL_LEXEMES.keys():
         # match abstractions and applications, return appropriate productions
-        if NON_TERMINAL_LEXEMES[key].match(io):
-            pass
+        if NON_TERMINAL_LEXEMES[key] == 'application':
+            is_match, ndx = match_application(io)
     return io
 
 # Core Interpreter Functions
@@ -55,6 +69,6 @@ if __name__ == '__main__':
     io = ''
     if len(sys.argv) > 1:
         io = sys.argv[1]
-    print("---------- ge repl.py 0.0.1 ----------")
+    print("---------- ge repl.py 0.1.0 ----------")
     signal(SIGINT, handler)
     repl(io)
