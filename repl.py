@@ -30,6 +30,9 @@ def handler(signal_received, frame):
     print('SIGINT or CTRL-C detected. Exiting gracefully')
     exit(0)
 
+def match_abstraction(io):
+    pass
+
 def match_application(io):
     parentheses_count = 0
     for ndx, character in enumerate(io):
@@ -42,7 +45,9 @@ def match_application(io):
             elif parenthese_count == -1:
                 raise Exception("Unmatched Parentheses encountered at ndx")
     return (False, 0)
-        
+
+def clean_io(io):
+    return io.strip().replace('\s+', ' ')
 
 def evaluate(io):
     for key in TERMINAL_LEXEMES.keys():
